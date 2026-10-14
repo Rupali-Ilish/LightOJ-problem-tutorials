@@ -13,7 +13,7 @@ Let $A_n$ be the number of ways to perfectly tile a $2 \times n$ board.
 - $A_0 = 1$
 - $A_1 = 1$ (1 way to place a single vertical shape)
 - $A_2 = 2$ (2 ways: 2 vertical shapes or 2 horizontal shapes)
-- $A_3 = 5$ (5 ways: 3 vertical, 2 horizontal and 1 vertical, 1 vertical and 2 horizontal, 2 L shaped together that cover 2*3, same 2 L shaped together that cover 2*3)
+- $A_3 = 5$ (5 ways: 3 vertical, 2 horizontal and 1 vertical, 1 vertical and 2 horizontal, 2 L shaped together that cover 2\*3, same 2 L shaped together that cover 2\*3)
 
 So, when we mathematically compress this infinite chain of possibilities, we get a recurrence relation:
 
@@ -25,48 +25,11 @@ Since $N$ can be up to $10^9$, calculating the sequence step-by-step using a bas
 
 We can represent our recurrence relation using a $3 \times 3$ transition matrix $T$:
 
-$$
-\begin{pmatrix}
-A_n \\
-A_{n-1} \\
-A_{n-2}
-\end{pmatrix}
-=
-\begin{pmatrix}
-2 & 0 & 1 \\
-1 & 0 & 0 \\
-0 & 1 & 0
-\end{pmatrix}
-\begin{pmatrix}
-A_{n-1} \\
-A_{n-2} \\
-A_{n-3}
-\end{pmatrix}
-$$
+$$\begin{pmatrix} A_n \\ A_{n-1} \\ A_{n-2} \end{pmatrix} = \begin{pmatrix} 2 & 0 & 1 \\ 1 & 0 & 0 \\ 0 & 1 & 0 \end{pmatrix} \begin{pmatrix} A_{n-1} \\ A_{n-2} \\ A_{n-3} \end{pmatrix}$$
 
 Given the base cases $A_0 = 1$, $A_1 = 1$, and $A_2 = 2$, we can calculate $A_n$ by raising the transition matrix $T$ to the power of $n-2$ and multiplying it by the base-case vector:
 
-$$
-\begin{pmatrix}
-A_n \\
-A_{n-1} \\
-A_{n-2}
-\end{pmatrix}
-=
-T^{n-2}
-\begin{pmatrix}
-A_2 \\
-A_1 \\
-A_0
-\end{pmatrix}
-=
-T^{n-2}
-\begin{pmatrix}
-2 \\
-1 \\
-1
-\end{pmatrix}
-$$
+$$\begin{pmatrix} A_n \\ A_{n-1} \\ A_{n-2} \end{pmatrix} = T^{n-2} \begin{pmatrix} A_2 \\ A_1 \\ A_0 \end{pmatrix} = T^{n-2} \begin{pmatrix} 2 \\ 1 \\ 1 \end{pmatrix}$$
 
 ## Code Explanation
 
