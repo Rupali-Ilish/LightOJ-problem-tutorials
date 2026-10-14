@@ -20,36 +20,51 @@ So, when we mathematically compress this infinite chain of possibilities, we get
 $$A_n = 2A_{n-1} + A_{n-3}$$
 
 ## Matrix Exponentiation
+
 Since $N$ can be up to $10^9$, calculating the sequence step-by-step using a basic loop will cause a **Time Limit Exceeded (TLE)**. We need to optimize this to $O(\log N)$ time using **Matrix Exponentiation**.
 
 We can represent our recurrence relation using a $3 \times 3$ transition matrix $T$:
 
 $$
-\begin{pmatrix} 
-A_n \\ 
-A_{n-1} \\ 
-A_{n-2} 
-\end{pmatrix} 
-= 
-\begin{pmatrix} 
-2 & 0 & 1 \\ 
-1 & 0 & 0 \\ 
-0 & 1 & 0 
-\end{pmatrix} 
-\begin{pmatrix} 
-A_{n-1} \\ 
-A_{n-2} \\ 
-A_{n-3} 
+\begin{pmatrix}
+A_n \\
+A_{n-1} \\
+A_{n-2}
+\end{pmatrix}
+=
+\begin{pmatrix}
+2 & 0 & 1 \\
+1 & 0 & 0 \\
+0 & 1 & 0
+\end{pmatrix}
+\begin{pmatrix}
+A_{n-1} \\
+A_{n-2} \\
+A_{n-3}
 \end{pmatrix}
 $$
 
-To find $A_n$, we raise our transition matrix $T$ to the power of $n-2$ (because our base cases end at index 2). Then, we multiply this powered-up matrix by our base case column vector:
+Given the base cases $A_0 = 1$, $A_1 = 1$, and $A_2 = 2$, we can calculate $A_n$ by raising the transition matrix $T$ to the power of $n-2$ and multiplying it by the base-case vector:
 
 $$
-\begin{pmatrix} 
-2 \\ 
-1 \\ 
-1 
+\begin{pmatrix}
+A_n \\
+A_{n-1} \\
+A_{n-2}
+\end{pmatrix}
+=
+T^{n-2}
+\begin{pmatrix}
+A_2 \\
+A_1 \\
+A_0
+\end{pmatrix}
+=
+T^{n-2}
+\begin{pmatrix}
+2 \\
+1 \\
+1
 \end{pmatrix}
 $$
 
